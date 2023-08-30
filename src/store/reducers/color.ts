@@ -44,12 +44,31 @@ const colorReducer: Reducer<AppState, AnyAction> = (
   */
 
   // je traduis mon action `change_first_color` en modifiant le state
-  if (action.type === 'change_first_color') {
-    return {
-      ...state, // je déverse tout le state actuel
-      nbColors: state.nbColors + 1, // ke modifie la valeur de `nbColors`
-      firstColor: '#fab',
-    };
+  // if (action.type === 'change_first_color') {
+  //   return {
+  //     ...state, // je déverse tout le state actuel
+  //     nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
+  //     firstColor: '#fab',
+  //   };
+  // }
+
+  switch (action.type) {
+    case 'change_first_color':
+      return {
+        ...state, // je déverse tout le state actuel
+        nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
+        firstColor: '#fab',
+      };
+
+    case 'change_last_color':
+      return {
+        ...state, // je déverse tout le state actuel
+        nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
+        lastColor: '#bada55',
+      };
+
+    default:
+      return state;
   }
 
   return state;

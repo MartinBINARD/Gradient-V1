@@ -148,13 +148,16 @@ document.getElementById('randFirst')!.addEventListener('click', () => {
 });
 
 document.getElementById('randLast')!.addEventListener('click', () => {
-  // data
-  state.nbColors += 1;
-  state.lastColor = randomHexColor();
-  // ui
-  renderNbColors();
-  renderGradient();
-  renderColors();
+  // // data
+  // state.nbColors += 1;
+  // state.lastColor = randomHexColor();
+  // // ui
+  // renderNbColors();
+  // renderGradient();
+  // renderColors();
+  store.dispatch({
+    type: 'change_last_color',
+  });
 });
 
 document.getElementById('toLeft')!.addEventListener('click', () => {
