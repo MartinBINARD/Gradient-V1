@@ -1,3 +1,6 @@
+import { Reducer } from 'react';
+import { AnyAction } from '@reduxjs/toolkit';
+
 import { AppState } from '../../@types';
 
 /*
@@ -24,8 +27,32 @@ const initialState: AppState = {
   nbColors: 0,
 };
 
-function colorReducer(state = initialState, action = { type: '@@INIT' }) {
+/*
+  Avec Redux « normal » (non Toolkit),
+  je dois typer mon reducer pour être sûr
+  du type de state retourné
+*/
+const colorReducer: Reducer<AppState, AnyAction> = (
+  state = initialState,
+  action = { type: '@@INIT' }
+) => {
+  console.log(action);
+
+  /*
+    on a le state actuel et une action pour le modifier
+    le rôle d'un reducer est de retourné ce nouveau state
+  */
+
+  // je traduis mon action `change_first_color` en modifiant le state
+  if (action.type === 'change_first_color') {
+    return {
+      ...state, // je déverse tout le state actuel
+      nbColors: state.nbColors + 1, // ke modifie la valeur de `nbColors`
+      firstColor: '#fab',
+    };
+  }
+
   return state;
-}
+};
 
 export default colorReducer;
