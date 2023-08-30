@@ -57,14 +57,15 @@ const colorReducer: Reducer<AppState, AnyAction> = (
       return {
         ...state, // je déverse tout le state actuel
         nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
-        firstColor: '#fab',
+        // je modifie la valeur avec l'info reçue dans mon action = le payload
+        firstColor: action.payload,
       };
 
     case 'change_last_color':
       return {
         ...state, // je déverse tout le state actuel
         nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
-        lastColor: '#bada55',
+        lastColor: action.payload,
       };
 
     default:

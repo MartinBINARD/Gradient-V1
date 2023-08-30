@@ -142,6 +142,9 @@ document.getElementById('randFirst')!.addEventListener('click', () => {
   const action = {
     // le type est une chaîne de caractères qui décrit notre action
     type: 'change_first_color',
+    // je dynamise mon changement de couleur en passant une info supplémentaire
+    // dans mon action = le _payload_
+    payload: randomHexColor(),
   };
   // j'émets mon intention
   store.dispatch(action);
@@ -157,6 +160,7 @@ document.getElementById('randLast')!.addEventListener('click', () => {
   // renderColors();
   store.dispatch({
     type: 'change_last_color',
+    payload: randomHexColor(),
   });
 });
 
