@@ -22,8 +22,12 @@ import './styles/index.scss';
           nbColors: 0
         }
       }
+
+  2. `subscribe(cb)` : exécuter des callback quand le state est modifié
+
+  3. `dispatch(action)` : émettre des actions / des intentions de modifier mon état
 */
-console.log(store.getState());
+// console.log(store.getState());
 
 // == State
 // const state: AppState = {
@@ -76,6 +80,20 @@ renderNbColors();
 renderGradient();
 renderColors();
 
+/*
+  Subscribe
+
+  on appelle des fonctions à chaque modification du store
+*/
+store.subscribe(() => {
+  console.log('state WAS UPDATED');
+  // à chaque modification des données
+  // on exécute les fonctions de rendus
+  renderNbColors();
+  renderGradient();
+  renderColors();
+});
+
 // == Controls
 document.getElementById('randAll')!.addEventListener('click', () => {
   // debug
@@ -106,6 +124,27 @@ document.getElementById('randFirst')!.addEventListener('click', () => {
   // > on aura même droit à un outil de debug
   //
   // → commis.fais(intention) : c'est le rôle d'un **store** (_gardien du state_)
+
+  /*
+    Dispatch
+
+    à chaque fois qu'on voudra modifier le state,
+    il **faudra** émettre une intention / dispatcher une action
+
+    Cette action sera envoyée au reducer avec le state courant par le store ;
+    le reducer pourra ainsi créer et retourner un nouveau state
+
+    nous : store.dispatch(action)
+    store : state = reducer(currentState, action);
+
+    Une obligation : un action est un OBJET avec une propriété TYPE obligatoire
+  */
+  const action = {
+    // le type est une chaîne de caractères qui décrit notre action
+    type: 'change_first_color',
+  };
+  // j'émets mon intention
+  store.dispatch(action);
 });
 
 document.getElementById('randLast')!.addEventListener('click', () => {

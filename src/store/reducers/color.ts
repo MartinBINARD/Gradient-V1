@@ -18,8 +18,8 @@ import { AppState } from '../../@types';
 */
 // je crée mon state initial
 const initialState: AppState = {
-  firstColor: '#e367a4',
-  lastColor: '#48b1f3',
+  firstColor: '#b0b',
+  lastColor: '#c0ffee',
   direction: '90deg',
   nbColors: 0,
 };
