@@ -19,6 +19,15 @@ import { AppState } from '../../@types';
 
   Ce state va être mémoriser par le store
 */
+
+// Action type :
+// une constante pour écrire le type de mon action
+// ça évite les erreurs « bêtes » comme les fautes d'orthographe
+export const CHANGE_FIRST_COLOR = 'change_first_color';
+export const CHANGE_LAST_COLOR = 'change_last_color';
+export const CHANGE_DIRECTION_TO_LEFT = 'change_direction_to_left';
+export const CHANGE_DIRECTION_TO_RIGHT = 'change_direction_to_right';
+
 // je crée mon state initial
 const initialState: AppState = {
   firstColor: '#b0b',
@@ -53,7 +62,7 @@ const colorReducer: Reducer<AppState, AnyAction> = (
   // }
 
   switch (action.type) {
-    case 'change_first_color':
+    case CHANGE_FIRST_COLOR:
       return {
         ...state, // je déverse tout le state actuel
         nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
@@ -61,18 +70,28 @@ const colorReducer: Reducer<AppState, AnyAction> = (
         firstColor: action.payload,
       };
 
-    case 'change_last_color':
+    case CHANGE_LAST_COLOR:
       return {
         ...state, // je déverse tout le state actuel
         nbColors: state.nbColors + 1, // je modifie la valeur de `nbColors`
         lastColor: action.payload,
       };
 
+    case CHANGE_DIRECTION_TO_LEFT:
+      return {
+        ...state,
+        direction: '270deg',
+      };
+
+    case CHANGE_DIRECTION_TO_RIGHT:
+      return {
+        ...state,
+        direction: '90deg',
+      };
+
     default:
       return state;
   }
-
-  return state;
 };
 
 export default colorReducer;

@@ -1,5 +1,11 @@
 // == Imports
 import store from './store';
+import {
+  CHANGE_DIRECTION_TO_LEFT,
+  CHANGE_DIRECTION_TO_RIGHT,
+  CHANGE_FIRST_COLOR,
+  CHANGE_LAST_COLOR,
+} from './store/reducers/color';
 
 import { randomHexColor, generateSpanColor } from './utils/color';
 
@@ -96,16 +102,30 @@ store.subscribe(() => {
 
 // == Controls
 document.getElementById('randAll')!.addEventListener('click', () => {
-  // debug
-  console.log('Random all colors');
-  // data
-  state.nbColors += 2;
-  state.firstColor = randomHexColor();
-  state.lastColor = randomHexColor();
-  // ui
-  renderNbColors();
-  renderGradient();
-  renderColors();
+  // // debug
+  // console.log('Random all colors');
+  // // data
+  // state.nbColors += 2;
+  // state.firstColor = randomHexColor();
+  // state.lastColor = randomHexColor();
+  // // ui
+  // renderNbColors();
+  // renderGradient();
+  // renderColors();
+  const action = {
+    // le type est une chaîne de caractères qui décrit notre action
+    type: CHANGE_FIRST_COLOR,
+    // je dynamise mon changement de couleur en passant une info supplémentaire
+    // dans mon action = le _payload_
+    payload: randomHexColor(),
+  };
+  // j'émets mon intention : modifier la 1ère couleur
+  store.dispatch(action);
+  // j'émets mon intention : modifier la 2nde couleur
+  store.dispatch({
+    type: CHANGE_LAST_COLOR,
+    payload: randomHexColor(),
+  });
 });
 
 document.getElementById('randFirst')!.addEventListener('click', () => {
@@ -141,7 +161,7 @@ document.getElementById('randFirst')!.addEventListener('click', () => {
   */
   const action = {
     // le type est une chaîne de caractères qui décrit notre action
-    type: 'change_first_color',
+    type: CHANGE_FIRST_COLOR,
     // je dynamise mon changement de couleur en passant une info supplémentaire
     // dans mon action = le _payload_
     payload: randomHexColor(),
@@ -159,23 +179,29 @@ document.getElementById('randLast')!.addEventListener('click', () => {
   // renderGradient();
   // renderColors();
   store.dispatch({
-    type: 'change_last_color',
+    type: CHANGE_LAST_COLOR,
     payload: randomHexColor(),
   });
 });
 
 document.getElementById('toLeft')!.addEventListener('click', () => {
-  // data
-  state.direction = '270deg';
-  // ui
-  renderGradient();
-  renderColors();
+  // // data
+  // state.direction = '270deg';
+  // // ui
+  // renderGradient();
+  // renderColors();
+  store.dispatch({
+    type: CHANGE_DIRECTION_TO_LEFT,
+  });
 });
 
 document.getElementById('toRight')!.addEventListener('click', () => {
-  // data
-  state.direction = '90deg';
-  // ui
-  renderGradient();
-  renderColors();
+  // // data
+  // state.direction = '90deg';
+  // // ui
+  // renderGradient();
+  // renderColors();
+  store.dispatch({
+    type: CHANGE_DIRECTION_TO_RIGHT,
+  });
 });
