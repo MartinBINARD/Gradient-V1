@@ -1,21 +1,44 @@
 // == Imports
+import store from './store';
+
 import { randomHexColor, generateSpanColor } from './utils/color';
 
-import { AppState } from './@types';
+// import { AppState } from './@types';
 
 import './styles/index.scss';
 
+/*
+  Store (Redux)
+
+  est un objet avec 3 méthodes principales :
+
+  1. `getState()` : lecture du state
+      output :
+      {
+        color: { // nom du
+          firstColor: '#e367a4',
+          lastColor: '#48b1f3',
+          direction: '90deg',
+          nbColors: 0
+        }
+      }
+*/
+console.log(store.getState());
+
 // == State
-const state: AppState = {
-  firstColor: '#e367a4',
-  lastColor: '#48b1f3',
-  direction: '90deg',
-  nbColors: 0,
-};
+// const state: AppState = {
+//   firstColor: '#e367a4',
+//   lastColor: '#48b1f3',
+//   direction: '90deg',
+//   nbColors: 0,
+// };
 
 // == Rendu dans le DOM
 function renderNbColors() {
-  const { nbColors } = state;
+  // je récupère le state global
+  const state = store.getState();
+  // je vais chercher `nbColors` dans le reducer `color`
+  const { nbColors } = state.color;
 
   /*
     le `!` indique à TS que l'élément ne sera jamais `null`
@@ -26,7 +49,7 @@ function renderNbColors() {
   `;
 }
 function renderGradient() {
-  const { direction, firstColor, lastColor } = state;
+  const { direction, firstColor, lastColor } = store.getState().color;
 
   /*
     par défaut, `document.querySelector` retourne un type `Element`
@@ -38,7 +61,7 @@ function renderGradient() {
   `;
 }
 function renderColors() {
-  const { firstColor, lastColor } = state;
+  const { firstColor, lastColor } = store.getState().color;
 
   const firstSpan = generateSpanColor(firstColor);
   const lastSpan = generateSpanColor(lastColor);
@@ -68,13 +91,21 @@ document.getElementById('randAll')!.addEventListener('click', () => {
 });
 
 document.getElementById('randFirst')!.addEventListener('click', () => {
-  // data
-  state.nbColors += 1;
-  state.firstColor = randomHexColor();
-  // ui
-  renderNbColors();
-  renderGradient();
-  renderColors();
+  // // data
+  // state.nbColors += 1;
+  // state.firstColor = randomHexColor();
+  // // ui
+  // renderNbColors();
+  // renderGradient();
+  // renderColors();
+  // on veut remplacer ces instructions par un ordre, une intention
+  // on utilisera un « commis » qui traduira cette intention :
+  //   - modifier le state (gestion des données)
+  //   - mettre à jour l'interface (gestion de l'UI)
+  //
+  // > on aura même droit à un outil de debug
+  //
+  // → commis.fais(intention) : c'est le rôle d'un **store** (_gardien du state_)
 });
 
 document.getElementById('randLast')!.addEventListener('click', () => {
